@@ -1,10 +1,14 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { UserProfile } from "./user-profile.entity";
 
 @Entity()
-
 export class User {
+
     @PrimaryGeneratedColumn()
-    id: number;
+    id: string;
+
+    @Column({ nullable: false })
+    userName: string;
 
     @Column({ unique: true, length: 10 })
     phoneNumber: string;
@@ -12,12 +16,20 @@ export class User {
     @Column({ nullable: true })
     otp: string;
 
-    @Column({nullable: false})
-    name?: string;
+    @Column({ type: 'timestamp', nullable: true })
+    otpExpiresAt: Date;
+
+    @Column({ nullable: true })
+    authToken: string;
+
+    @Column({ nullable: false })
+    password: string;
 
     @CreateDateColumn()
     createdAt: Date;
 
+    @OneToOne(() => UserProfile, (profile) => profile.user, { cascade: true })
+    userProfile: UserProfile;
 
 
 }

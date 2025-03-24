@@ -1,16 +1,43 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
-import { UserAuthService } from './user-auth.service';
-import { ServiceProviderAuthService } from './service-provider-auth.service';
-import { LoginDto } from 'src/users/dto/login.dto';
-import { VerifyOtpDto } from './dto/verify-otp.dto';
+import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, Query } from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { ForgotPasswordDto, LoginUserDto, RegisterUserDto, ResetPasswordDto } from 'src/users/dto/user.dto';
+
 
 @Controller('auth')
 export class AuthController {
   constructor(
-    private readonly userAuthService: UserAuthService,
-    private readonly serviceProviderAuthService: ServiceProviderAuthService,) { }
+    private readonly authService: AuthService) {}
+
+    @Post('register')
+    register(@Body() registerDto: RegisterUserDto) {
+      return this.authService.register(registerDto);
+    }
+  
+    @Post('login')
+    login(@Body() loginDto: LoginUserDto) {
+      
+      return this.authService.login(loginDto);
+    }
+  
+    @Post('forgot-password')
+    forgotPassword(@Body() forgotDto: ForgotPasswordDto) {
+      return this.authService.forgotPassword(forgotDto);
+    }
+  
+    @Post('reset-password')
+    resetPassword(@Body() resetDto: ResetPasswordDto) {
+      return this.authService.resetPassword(resetDto);
+    }
+  
+    @Post('logout')
+    logout(@Query('authToken') authToken: string) {
+      return this.authService.logout(authToken);
+    }
+  
+    @Get('validate-token')
+    validateToken(@Query('authToken') authToken: string) {
+      return this.authService.validateAuthToken(authToken)
+    }
 
 
 //   @Post('login')

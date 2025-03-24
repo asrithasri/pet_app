@@ -4,6 +4,14 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { User } from './users/entities/user.entity';
+import { PetProfileModule } from './pet-profile/pet-profile.module';
+import { UserProfile } from './users/entities/user-profile.entity';
+import { AuthModule } from './auth/auth.module';
+import { CreatePetProfile } from './pet-profile/entities/pet-profile.entity';
+import { PetSellingModule } from './pet-selling/pet-selling.module';
+import { PetSellingEntity } from './pet-selling/entities/pet-selling.entity';
+import { StoresModule } from './stores/stores.module';
+import { Store } from './stores/entities/store.entity';
 
 @Module({
   imports: [
@@ -13,13 +21,14 @@ import { User } from './users/entities/user.entity';
       port: 5432,
       username: 'postgres',
       password: '2024',
-      database: 'laundry',
-      entities: [User,],
+      database: 'petapp',
+      entities: [User,UserProfile,CreatePetProfile,PetSellingEntity,Store],
       synchronize: true,
     }),
     UsersModule,
+    PetProfileModule,AuthModule, PetSellingModule, StoresModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {} 
