@@ -12,6 +12,8 @@ import { PetSellingModule } from './pet-selling/pet-selling.module';
 import { PetSellingEntity } from './pet-selling/entities/pet-selling.entity';
 import { StoresModule } from './stores/stores.module';
 import { Store } from './stores/entities/store.entity';
+import { ImagesModule } from './images/images.module';
+import { Image } from './images/entities/image.entity';
 
 @Module({
   imports: [
@@ -22,11 +24,11 @@ import { Store } from './stores/entities/store.entity';
       username: 'postgres',
       password: '2024',
       database: 'petapp',
-      entities: [User,UserProfile,CreatePetProfile,PetSellingEntity,Store],
+      entities: [User,UserProfile,CreatePetProfile,PetSellingEntity,Store,Image],
       synchronize: true,
     }),
     UsersModule,
-    PetProfileModule,AuthModule, PetSellingModule, StoresModule,
+    PetProfileModule,AuthModule, PetSellingModule, StoresModule, ImagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
