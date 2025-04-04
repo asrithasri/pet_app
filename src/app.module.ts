@@ -12,11 +12,11 @@ import { PetSellingModule } from './pet-selling/pet-selling.module';
 import { PetSellingEntity } from './pet-selling/entities/pet-selling.entity';
 import { StoresModule } from './stores/stores.module';
 import { Store } from './stores/entities/store.entity';
-import { ImagesModule } from './images/images.module';
-import { Image } from './images/entities/image.entity';
+import { UploadModule } from './upload/upload.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [
+  imports: [ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -24,11 +24,11 @@ import { Image } from './images/entities/image.entity';
       username: 'postgres',
       password: '2024',
       database: 'petapp',
-      entities: [User,UserProfile,CreatePetProfile,PetSellingEntity,Store,Image],
-      synchronize: true,
-    }),
+      entities: [User,UserProfile,CreatePetProfile,PetSellingEntity,Store],
+      synchronize: true, 
+    },),
     UsersModule,
-    PetProfileModule,AuthModule, PetSellingModule, StoresModule, ImagesModule,
+    PetProfileModule,AuthModule, PetSellingModule, StoresModule, UploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],
